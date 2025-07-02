@@ -1,6 +1,19 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Pacifico } from 'next/font/google';
+import { Pangolin  } from 'next/font/google';
 import "./globals.css";
+
+const pacifico = Pacifico({
+  subsets: ['latin'],
+  weight: '400', 
+  variable: '--font-pacifico', // optional CSS variable
+});
+const pangolin = Pangolin({
+  subsets: ['latin'],
+  weight: '400', 
+  variable: '--font-pangolin', // optional CSS variable
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${pangolin.className}`}
       >
         {children}
       </body>
