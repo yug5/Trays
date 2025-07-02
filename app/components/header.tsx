@@ -5,7 +5,7 @@ export default function Header() {
     useEffect(()=>{
         const timer = setTimeout(() => {
             setLoaded(true);
-        }, 100);
+        }, 50);
         return () => clearTimeout(timer);
     }, []);
   return (
