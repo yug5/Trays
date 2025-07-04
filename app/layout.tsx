@@ -1,20 +1,20 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Pacifico } from 'next/font/google';
-import { Pangolin } from 'next/font/google';
+import { Pacifico, Pangolin } from "next/font/google";
 import "./globals.css";
+import GridBackground from "./components/GridBackground";
 
 const pacifico = Pacifico({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-pacifico',
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-pacifico",
 });
 const pangolin = Pangolin({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-pangolin',
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-pangolin",
 });
-
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -39,17 +39,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${pangolin.className} relative min-h-screen bg-white`}>
-        {/* Light background grid */}
-        <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.07)_1px,transparent_1px)] bg-[length:32px_32px] pointer-events-none" />
-
-        {/* Radial dark highlight grid — dynamic mask */}
-        <div
-          id="dark-grid"
-          className="hidden md:block absolute inset-0 -z-10 pointer-events-none bg-[linear-gradient(to_right,rgba(0,0,0,0.15)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.15)_1px,transparent_1px)] bg-[length:32px_32px] mask-radial-highlight"
-        />
-
-        {/* Page content */}
-        {children}
+        <GridBackground />
+        <div className="relative z-10">{children}</div>
       </body>
     </html>
   );
