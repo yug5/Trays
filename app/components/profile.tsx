@@ -33,7 +33,7 @@ export default function Profile() {
           <Image
             src={profileImage}
             alt="Profile"
-            className="rounded-full"
+            className="rounded-full outline-dotted outline-2 outline-gray-400 p-1"
             width={60}
             height={60}
           />
@@ -99,9 +99,9 @@ export default function Profile() {
               />
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="w-[50px] h-[50px] rounded-full bg-gray-700 flex items-center justify-center cursor-pointer"
+                className="w-[50px] h-[50px] rounded-full bg-gray-700  flex items-center justify-center cursor-pointer"
               >
-                📂+
+                🗂 +
               </div>
               <input
                 ref={fileInputRef}
