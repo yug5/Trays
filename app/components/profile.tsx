@@ -1,15 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Profile() {
+  const { data: session } = useSession();
+  signOut({ callbackUrl: "/signin" });
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [name, setName] = useState("user");
-  const [editName, setEditName] = useState(name);
+  const [editName, setEditName] = useState("user");
   const [profileImage, setProfileImage] = useState("/pfp.png");
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (session) {
+      setName(session.user?.name || "user");
+      setEditName(session.user?.name || "user");
+      setProfileImage(session.user?.image || "/pfp.png");
+    }
+  }, [session]);
+
+  if (!session) return null;
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -18,6 +31,7 @@ export default function Profile() {
       setProfileImage(url);
     }
   };
+
   const handleSave = () => {
     setName(editName);
     setDropdownOpen(false);
@@ -37,7 +51,7 @@ export default function Profile() {
             width={60}
             height={60}
           />
-          <p className="text-xl text-black  font-bold mt-4">{name}</p>
+          <p className="text-xl text-black font-bold mt-4">{name}</p>
         </button>
       </div>
 
@@ -48,11 +62,8 @@ export default function Profile() {
             onClick={() => setDropdownOpen(false)}
           />
 
-          <div
-            className="fixed top-1/2 left-1/2 z-50 transform -translate-x-1/2 -translate-y-1/2 
-  w-[20rem] md:w-[28rem] bg-white shadow-xl rounded-xl p-6 border space-y-4"
-          >
-            <h1 className="text-xl md:text-3xl text-center text-black m-2 md:m-5  font-semibold">
+          <div className="fixed top-1/2 left-1/2 z-50 transform -translate-x-1/2 -translate-y-1/2 w-[20rem] md:w-[28rem] bg-white shadow-xl rounded-xl p-6 border space-y-4">
+            <h1 className="text-xl md:text-3xl text-center text-black m-2 md:m-5 font-semibold">
               Profile Settings
             </h1>
             <label className="block text-md font-medium text-gray-700 mb-2">
@@ -65,41 +76,22 @@ export default function Profile() {
             />
             <p className="text-md text-gray-700">Choose Avatar</p>
             <div className="flex flex-wrap gap-4 m-2">
-              <Image
-                src="/pfp.png"
-                onClick={() => setProfileImage("/pfp.png")}
-                width={50}
-                height={50}
-                className="cursor-pointer rounded-full"
-                alt="Avatar1"
-              />
-              <Image
-                src="/pfp1.png"
-                onClick={() => setProfileImage("/pfp1.png")}
-                width={50}
-                height={50}
-                className="cursor-pointer rounded-full"
-                alt="Avatar2"
-              />
-              <Image
-                src="/pfp2.png"
-                onClick={() => setProfileImage("/pfp2.png")}
-                width={50}
-                height={50}
-                className="cursor-pointer rounded-full"
-                alt="Avatar3"
-              />
-              <Image
-                src="/pfp3.png"
-                onClick={() => setProfileImage("/pfp3.png")}
-                width={50}
-                height={50}
-                className="cursor-pointer rounded-full"
-                alt="Avatar4"
-              />
+              {["/pfp.png", "/pfp1.png", "/pfp2.png", "/pfp3.png"].map(
+                (src) => (
+                  <Image
+                    key={src}
+                    src={src}
+                    onClick={() => setProfileImage(src)}
+                    width={50}
+                    height={50}
+                    className="cursor-pointer rounded-full"
+                    alt="Avatar"
+                  />
+                )
+              )}
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="w-[50px] h-[50px] rounded-full bg-gray-700  flex items-center justify-center cursor-pointer"
+                className="w-[50px] h-[50px] rounded-full bg-gray-700 flex items-center justify-center cursor-pointer"
               >
                 🗂 +
               </div>

@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 import { Pacifico, Pangolin } from "next/font/google";
 import "./globals.css";
 import GridBackground from "./components/GridBackground";
-
+import Providers from "./providers";
 const pacifico = Pacifico({
   subsets: ["latin"],
   weight: "400",
@@ -39,8 +39,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${pangolin.className} relative min-h-screen bg-white`}>
-        <GridBackground />
-        <div className="relative z-10">{children}</div>
+        <Providers>
+          <GridBackground />
+          <div className="relative z-10">{children}</div>
+        </Providers>
       </body>
     </html>
   );

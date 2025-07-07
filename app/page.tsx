@@ -11,8 +11,23 @@ import Calendar from "./components/calendar";
 import TopMood from "./components/topMood";
 import Profile from "./components/profile";
 import Streak from "./components/streak";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 export default function Home() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
   const [loaded, setLoaded] = useState(false);
+  const [activeTab, setActiveTab] = useState("home");
+  const [direction, setDirection] = useState(1);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/signin");
+    }
+  }, [status, router]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoaded(true);
@@ -32,9 +47,6 @@ export default function Home() {
     }),
   };
 
-  const [activeTab, setActiveTab] = useState("home");
-  const [direction, setDirection] = useState(1);
-
   const tabs = [
     { name: "Today's Vibe", id: "home" },
     { name: "About Month", id: "about" },
@@ -49,6 +61,10 @@ export default function Home() {
     );
     setActiveTab(id);
   };
+
+  if (status === "loading" || status === "unauthenticated") {
+    return <div className="p-4">Loading...</div>;
+  }
   return (
     <div className="relative min-h-screen ">
       <Header />
