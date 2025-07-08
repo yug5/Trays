@@ -1,42 +1,30 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json();
+  const { email, password, name } = await req.json();
 
-  if (!email || !password) {
+  if (!email || !password || !name) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
 
-  const user = await prisma.user.findUnique({ where: { email } });
-
-  if (!user || !user.password) {
-    return NextResponse.json({ error: "User not found" }, { status: 401 });
+  const existingUser = await prisma.user.findUnique({ where: { email } });
+  if (existingUser) {
+    return NextResponse.json({ error: "User already exists" }, { status: 400 });
   }
 
-  const valid = await bcrypt.compare(password, user.password);
-  if (!valid) {
-    return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
-  }
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  // ✅ Generate JWT
-  const token = jwt.sign(
-    { userId: user.id, email: user.email },
-    process.env.JWT_SECRET!,
-    { expiresIn: "7d" }
-  );
-
-  // ✅ Set JWT as a cookie
-  cookies().set("token", token, {
-    httpOnly: true,
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+  await prisma.user.create({
+    data: {
+      email,
+      name,
+      password: hashedPassword,
+    },
   });
 
-  return NextResponse.json({ message: "Logged in" }, { status: 200 });
+  return NextResponse.json({ message: "User created" }, { status: 201 });
 }

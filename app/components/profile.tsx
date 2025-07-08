@@ -6,7 +6,6 @@ import { signOut, useSession } from "next-auth/react";
 
 export default function Profile() {
   const { data: session } = useSession();
-  signOut({ callbackUrl: "/signin" });
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [name, setName] = useState("user");
@@ -110,7 +109,7 @@ export default function Profile() {
               Save
             </button>
             <button
-              onClick={() => signOut()}
+              onClick={() => signOut({ callbackUrl: "/signin" })}
               className="w-full bg-red-500 text-white py-1 rounded hover:bg-red-600 text-sm"
             >
               Logout
