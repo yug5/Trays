@@ -6,6 +6,38 @@
 .pnp.js
 .yarn/install-state.gz
 
+# Node
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Next.js build
+.next/
+out/
+dist/
+.cache/
+
+# Vercel/Netlify
+.vercel/
+.netlify/
+
+# Env & logs
+.env*
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor configs
+.vscode/
+.idea/
+
+# Optional: Remove any public uploads
+public/uploads/
+
+
 # testing
 /coverage
 
