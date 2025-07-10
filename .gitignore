@@ -6,6 +6,11 @@
 .pnp.js
 .yarn/install-state.gz
 
+# Accidental backup copies
+* copy/
+*/copy/
+
+
 # Node
 node_modules/
 package-lock.json
