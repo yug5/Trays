@@ -83,7 +83,11 @@ export default function Profile() {
                     onClick={() => setProfileImage(src)}
                     width={50}
                     height={50}
-                    className="cursor-pointer rounded-full"
+                    className={`cursor-pointer rounded-full ${
+                      profileImage === src
+                        ? "outline outline-2 outline-gray-700 p-1"
+                        : ""
+                    }`}
                     alt="Avatar"
                   />
                 )
