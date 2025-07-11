@@ -42,9 +42,9 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-white relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center px-4  relative overflow-hidden">
       <GridBackground />
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white via-gray-100 to-gray-200 opacity-90" />
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white/80 via-gray-100/90 to-gray-200/70 opacity-90" />
       <form
         onSubmit={handleLogin}
         className="relative w-full max-w-md mx-auto bg-white/90 border border-gray-200 shadow-xl rounded-2xl p-8 space-y-6 backdrop-blur"

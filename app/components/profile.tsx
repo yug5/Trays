@@ -20,6 +20,18 @@ export default function Profile() {
       setProfileImage(session.user?.image || "/pfp.png");
     }
   }, [session]);
+  useEffect(() => {
+    async function fetchUserProfile() {
+      const response = await fetch("/api/user/profile");
+      const data = await response.json();
+      if (response.ok) {
+        setName(data.user.name);
+        setEditName(data.user.name);
+        setProfileImage(data.user.image || "/pfp.png");
+      }
+    }
+    fetchUserProfile();
+  }, []);
 
   if (!session) return null;
 
@@ -31,9 +43,20 @@ export default function Profile() {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setName(editName);
     setDropdownOpen(false);
+
+    await fetch("/api/user/profile", {
+      method: "PUT",
+      body: JSON.stringify({
+        image: profileImage,
+        name: editName,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   };
 
   return (
@@ -92,19 +115,6 @@ export default function Profile() {
                   />
                 )
               )}
-              <div
-                onClick={() => fileInputRef.current?.click()}
-                className="w-[50px] h-[50px] rounded-full bg-gray-700 flex items-center justify-center cursor-pointer"
-              >
-                🗂 +
-              </div>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-              />
             </div>
             <button
               onClick={handleSave}

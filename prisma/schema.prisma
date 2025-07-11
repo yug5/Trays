@@ -14,10 +14,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model User {
-  id       String   @id @default(cuid())
-  name     String?
-  email    String   @unique
-  password String?  // Only used for credentials login
-  image    String?
+  id       String    @id @default(cuid())
+  name     String
+  email    String    @unique
+  password String?
+  image    String?   // for avatar
+  journals Journal[] // 🔁 related journal entries
 }
+
+model Journal {
+  id        String   @id @default(cuid())
+  userId    String
+  content   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
 
