@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "./components/header";
@@ -62,8 +63,12 @@ export default function Home() {
     setActiveTab(id);
   };
 
-  if (status === "loading" || status === "unauthenticated") {
-    return <div className="p-4">Loading...</div>;
+  if (status === "loading") {
+    return (
+      <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 scale-150">
+        <Image src="/logo.png" alt="Logo" width={200} height={200} />
+      </div>
+    );
   }
   return (
     <div className="relative min-h-screen ">
