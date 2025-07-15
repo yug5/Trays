@@ -14,7 +14,7 @@ import Profile from "./components/profile";
 import Streak from "./components/streak";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
+import { getEmoji } from "./components/getEmoji";
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -125,7 +125,7 @@ export default function Home() {
                       <Journal content={content} />
                     </div>
                     <div className="col-span-2 row-span-3 col-start-3">
-                      <Mood />
+                      <Mood mood={getEmoji(mood)} />
                     </div>
                     <div className="row-span-3 col-start-5">
                       <Song />
@@ -137,10 +137,10 @@ export default function Home() {
 
                   <div className="md:hidden flex flex-col gap-6 px-6 py-8 w-full z-50">
                     <div>
-                      <Journal />
+                      <Journal content={content} />
                     </div>
                     <div>
-                      <Mood />
+                      <Mood mood={getEmoji(mood)} />
                     </div>
                     <div>
                       <Song />

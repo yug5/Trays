@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@/app/generated/prisma/client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/authOptions";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-  
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -26,15 +25,26 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const { searchParams } = new URL(req.url);
+  const dateParam = searchParams.get("date");
+  if (!dateParam) {
+    return NextResponse.json(
+      { error: "Date query is required" },
+      { status: 400 }
+    );
+  }
+
+  const requestedDate = new Date(dateParam);
+  requestedDate.setHours(0, 0, 0, 0);
+  const nextDay = new Date(requestedDate);
+  nextDay.setDate(requestedDate.getDate() + 1);
 
   const existing = await prisma.journal.findFirst({
     where: {
       userId: user.id,
       date: {
-        gte: today,
-        lt: new Date(today.getTime() + 86400000),
+        gte: requestedDate,
+        lt: nextDay,
       },
     },
   });
@@ -71,15 +81,21 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const { searchParams } = new URL(req.url);
+  const dateParam = searchParams.get("date");
+
+  const targetDate = dateParam ? new Date(dateParam) : new Date();
+  targetDate.setHours(0, 0, 0, 0);
+
+  const nextDay = new Date(targetDate);
+  nextDay.setDate(targetDate.getDate() + 1);
 
   const journal = await prisma.journal.findFirst({
     where: {
       userId: user.id,
       date: {
-        gte: today,
-        lt: new Date(today.getTime() + 86400000), // today < date < tomorrow
+        gte: targetDate,
+        lt: nextDay,
       },
     },
   });

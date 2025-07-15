@@ -1,6 +1,8 @@
 import React from "react";
-
-export default function mood() {
+type MoodProps = {
+  mood: string;
+};
+export default function Mood({ mood }: MoodProps) {
   return (
     <div className="bg-white h-full rounded-2xl outline-dashed outline-3 outline-gray-400 p-5  ">
       <div className="flex flex-col justify-between items-center">
@@ -8,7 +10,7 @@ export default function mood() {
           Todays Vibe
         </h1>
         <div className="flex flex-col items-center justify-start m-5 h-full">
-          <p className="text-9xl hover:scale-110 duration-300 ">😋</p>
+          <p className="text-9xl hover:scale-110 duration-300 ">{mood}</p>
           <p className="text-lg text-gray-600 m-8">Feeling good!</p>
         </div>
       </div>

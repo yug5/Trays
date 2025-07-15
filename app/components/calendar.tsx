@@ -2,7 +2,10 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 
-export default function Calendar() {
+type CalendarProps = {
+  mood?: string;
+};
+export default function Calendar({ mood }: CalendarProps) {
   const [currentDate, setCurrentDate] = useState(dayjs());
 
   const startOfMonth = currentDate.startOf("month");
@@ -38,21 +41,21 @@ export default function Calendar() {
           ))}
         </div>
 
-        <div className="grid grid-cols-7 p-7 text-start">
+        <div className="grid grid-cols-7 p-7 px-2 md:text-start text-center">
           {Array.from({ length: startDay }).map((_, i) => (
             <div className="" key={"empty" + i}></div>
           ))}
           {daysArray.map((day) => (
             <div
               key={day}
-              className="border  p-2  pb-12 text-2xl hover:bg-gray-100 hover:scale-110 duration-200 hover:rounded-lg cursor-pointer"
+              className="border  p-2 text-lg  md:pb-12  md:text-2xl hover:bg-gray-100 hover:scale-110 duration-200 hover:rounded-lg cursor-pointer"
               onClick={() =>
                 alert(`Clicked ${day} ${currentDate.format("MMMM")}`)
               }
             >
               {day}
 
-              <p className="text-center  text-xl">😊</p>
+              <p className="text-center md:pt-3  text-sm md:text-xl">😊</p>
             </div>
           ))}
         </div>
