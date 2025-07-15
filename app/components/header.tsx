@@ -17,7 +17,7 @@ export default function Header() {
           ? "-top-4 md:-top-2 scale-75 md:scale-100 bg-white/30  w-full mx-auto flex items-center justify-center  "
           : "top-1/2 scale-150 bg-transparent  -translate-y-1/2"
       } 
-    -translate-x-1/2 z-50 transition-all duration-700 ease-in-out`}
+    -translate-x-1/2 z-40 md:z-50 transition-all duration-700 ease-in-out`}
     >
       <Image src="/logo.png" alt="Logo" width={200} height={200} />
     </div>

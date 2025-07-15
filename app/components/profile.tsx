@@ -61,7 +61,7 @@ export default function Profile() {
 
   return (
     <div>
-      <div className="relative md:fixed md:scale-100 scale-75 md:top-4 md:right-8 rounded-full z-50">
+      <div className="relative md:fixed md:scale-100 scale-75 md:top-4 md:right-8 rounded-full z-40 md:z-50">
         <button
           className="text-black flex flex-col items-center justify-center rounded"
           onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -80,7 +80,7 @@ export default function Profile() {
       {dropdownOpen && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-white/20 backdrop-blur-sm"
+            className="fixed inset-0 z-30 bg-white/20 backdrop-blur-sm"
             onClick={() => setDropdownOpen(false)}
           />
 

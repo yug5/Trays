@@ -29,7 +29,12 @@ export default function Calendar() {
 
         <div className="grid grid-cols-7 text-center text-gray-500 mb-2">
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
-            <div key={d}>{d}</div>
+            <div
+              className="hover:scale-125 duration-300 cursor-default"
+              key={d}
+            >
+              {d}
+            </div>
           ))}
         </div>
 
@@ -40,7 +45,7 @@ export default function Calendar() {
           {daysArray.map((day) => (
             <div
               key={day}
-              className="border  p-2  pb-12 text-2xl hover:bg-gray-100 hover:scale-110 hover:rounded-lg cursor-pointer"
+              className="border  p-2  pb-12 text-2xl hover:bg-gray-100 hover:scale-110 duration-200 hover:rounded-lg cursor-pointer"
               onClick={() =>
                 alert(`Clicked ${day} ${currentDate.format("MMMM")}`)
               }

@@ -22,6 +22,19 @@ export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
   const [direction, setDirection] = useState(1);
+  const [content, setContent] = useState("");
+  const [mood, setMood] = useState("");
+  async function fetchTodayJournal() {
+    const res = await fetch("/api/journal");
+    const data = await res.json();
+    if (res.ok && data.journal) {
+      setContent(data.journal.content);
+      setMood(data.journal.mood || "");
+    }
+  }
+  useEffect(() => {
+    fetchTodayJournal();
+  }, []);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -71,7 +84,7 @@ export default function Home() {
     );
   }
   return (
-    <div className="relative min-h-screen ">
+    <div className="relative cursor-default min-h-screen ">
       <Header />
 
       {loaded && (
@@ -109,7 +122,7 @@ export default function Home() {
                 <>
                   <div className="hidden md:grid grid-cols-5 grid-rows-5 gap-4 px-32 py-8 min-h-[80vh] w-full z-50">
                     <div className="col-span-2 row-span-5">
-                      <Journal />
+                      <Journal content={content} />
                     </div>
                     <div className="col-span-2 row-span-3 col-start-3">
                       <Mood />
@@ -181,7 +194,13 @@ export default function Home() {
             ✍︎
           </button>
 
-          <Write />
+          <Write
+            content={content}
+            setContent={setContent}
+            mood={mood}
+            setMood={setMood}
+            refetchJournal={fetchTodayJournal}
+          />
         </div>
       )}
     </div>

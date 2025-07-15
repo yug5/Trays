@@ -8,7 +8,7 @@ export default function mood() {
           Todays Vibe
         </h1>
         <div className="flex flex-col items-center justify-start m-5 h-full">
-          <p className="text-9xl ">😋</p>
+          <p className="text-9xl hover:scale-110 duration-300 ">😋</p>
           <p className="text-lg text-gray-600 m-8">Feeling good!</p>
         </div>
       </div>
