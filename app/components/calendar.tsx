@@ -55,7 +55,7 @@ export default function Calendar({ mood }: CalendarProps) {
             >
               {day}
 
-              <p className="text-center md:pt-3  text-sm md:text-xl">😊</p>
+              <p className="text-center md:pt-3 m-1 text-sm md:text-xl">😊</p>
             </div>
           ))}
         </div>
