@@ -1,13 +1,16 @@
+// app/lib/getJournalInsights.ts
 export async function getJournalInsights(content: string, mood: string) {
   const prompt = `
 Journal Entry: ${content}
 Mood: ${mood}
 
-Based on this, give me:
-1. One short suggestion of what the person should do today (max 15 words).
-2. One motivational quote (1 sentence only).
-3. A song recommendation (song name and artist only, mood appropriate).
-Return only JSON format with keys: suggestion, quote, song.
+Give me a valid JSON response only. Do not include any explanation.
+Format:
+{
+  "suggestion": ["...", "...", "..."], 
+  "quote": "...", 
+  "song": "Song Name - Artist"
+}
 `;
 
   const response = await fetch("https://api.mistral.ai/v1/chat/completions", {
@@ -17,9 +20,12 @@ Return only JSON format with keys: suggestion, quote, song.
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "mistral-tiny", // or mistral-small if you prefer
+      model: "mistral-tiny",
       messages: [
-        { role: "system", content: "You are a friendly, mood-aware assistant." },
+        {
+          role: "system",
+          content: "You are a helpful assistant that only returns valid JSON.",
+        },
         { role: "user", content: prompt },
       ],
     }),
@@ -28,13 +34,21 @@ Return only JSON format with keys: suggestion, quote, song.
   const data = await response.json();
 
   try {
-    const content = data.choices[0].message.content;
-    const result = JSON.parse(content); // expect JSON with suggestion, quote, song
+    const content = data.choices[0].message.content.trim();
+
+    console.log("Raw Mistral response:", content); // 🧠 Check output in terminal
+
+    // Optional: sanitize and extract JSON only
+    const jsonStart = content.indexOf("{");
+    const jsonEnd = content.lastIndexOf("}");
+    const json = content.slice(jsonStart, jsonEnd + 1);
+
+    const result = JSON.parse(json);
     return result;
   } catch (error) {
     console.error("Error parsing Mistral response:", error);
     return {
-      suggestion: "Stay positive and keep moving forward.",
+      suggestion: ["Stay positive", "Take a deep breath", "Smile more"],
       quote: "This too shall pass.",
       song: "Happy - Pharrell Williams",
     };

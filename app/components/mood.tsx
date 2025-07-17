@@ -2,8 +2,9 @@ import React from "react";
 import { getEmoji } from "./getEmoji";
 type MoodProps = {
   mood: string;
+  tips: string[];
 };
-export default function Mood({ mood }: MoodProps) {
+export default function Mood({ mood, tips }: MoodProps) {
   return (
     <div className="bg-white h-full rounded-2xl outline-dashed outline-3 outline-gray-400 p-5  ">
       <div className="flex flex-col justify-between items-center">
@@ -21,9 +22,9 @@ export default function Mood({ mood }: MoodProps) {
         Suggestion for today
       </h3>
       <ul className="text-gray-500 justify-start text-md list-disc mx-6">
-        <li>Enjoying the little things</li>
-        <li>Staying positive</li>
-        <li>Embracing the moment</li>
+        {tips?.map((tip, index) => (
+          <li key={index}>{tip}</li>
+        ))}
       </ul>
     </div>
   );

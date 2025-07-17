@@ -14,6 +14,7 @@ import Profile from "./components/profile";
 import Streak from "./components/streak";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { body } from "framer-motion/client";
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -23,15 +24,44 @@ export default function Home() {
   const [direction, setDirection] = useState(1);
   const [content, setContent] = useState("");
   const [mood, setMood] = useState("❓");
+  const [quote, setQuote] = useState("");
+  const [spotifyTrack, setSpotifyTrack] = useState("");
+  const [dailyTips, setDailyTips] = useState<string[]>([]); // array
+
   async function fetchTodayJournal() {
     const res = await fetch("/api/journal");
     const data = await res.json();
+
+    console.log("API Response:", data); // 💥 Add this
+
     if (res.ok && data.journal) {
       setContent(data.journal.content);
       setMood(data.journal.mood || "❓");
+
+      try {
+        const aiResponse = data.journal.aiResponse;
+        console.log("AI Response Raw:", aiResponse);
+
+        if (aiResponse) {
+          const parsed =
+            typeof aiResponse === "string"
+              ? JSON.parse(aiResponse)
+              : aiResponse;
+          setQuote(parsed.quote);
+          setSpotifyTrack(parsed.song);
+          setDailyTips(parsed.suggestion);
+        } else {
+          console.warn("AI Response is missing");
+        }
+      } catch (err) {
+        console.error("Failed to parse AI response:", err);
+      }
     }
   }
+
   useEffect(() => {
+    console.log("useEffect called");
+
     fetchTodayJournal();
   }, []);
 
@@ -124,13 +154,13 @@ export default function Home() {
                       <Journal content={content} />
                     </div>
                     <div className="col-span-2 row-span-3 col-start-3">
-                      <Mood mood={mood} />
+                      <Mood mood={mood} tips={dailyTips} />
                     </div>
                     <div className="row-span-3 col-start-5">
-                      <Song />
+                      <Song name={spotifyTrack} />
                     </div>
                     <div className="col-span-3 row-span-2 col-start-3 row-start-4">
-                      <Quote />
+                      <Quote quote={quote} />
                     </div>
                   </div>
 
@@ -139,13 +169,13 @@ export default function Home() {
                       <Journal content={content} />
                     </div>
                     <div>
-                      <Mood mood={mood} />
+                      <Mood mood={mood} tips={dailyTips} />
                     </div>
                     <div>
-                      <Song />
+                      <Song name={spotifyTrack} />
                     </div>
                     <div>
-                      <Quote />
+                      <Quote quote={quote} />
                     </div>
                   </div>
                 </>

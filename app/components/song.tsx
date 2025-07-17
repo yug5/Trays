@@ -1,6 +1,9 @@
 import React from "react";
-
-export default function song() {
+type MoodProps = {
+  name: string;
+  artist?: string;
+};
+export default function Song({ name, artist }: MoodProps) {
   return (
     <div className="bg-white h-full rounded-2xl outline-dashed outline-3 outline-gray-400 p-5 flex flex-col ">
       <div className="flex flex-col justify-between items-center">
@@ -9,7 +12,7 @@ export default function song() {
         </h1>
       </div>
       <div className="text-gray-500 text-2xl m-4 mx-auto  w-[90%] h-[60%] outline-double outline-4 outline-gray-400 rounded-lg"></div>
-      <p className="text-lg text-gray-600 text-center ">~ Song name</p>
+      <p className="text-lg text-gray-600 text-center ">~ {name}</p>
       <button className="text-4xl text-gray-500 text-center mb-2">
         ─•────
       </button>

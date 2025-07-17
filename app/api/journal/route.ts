@@ -1,3 +1,4 @@
+// app/api/journal/route.ts
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@/app/generated/prisma/client";
 import { getServerSession } from "next-auth";
@@ -13,6 +14,7 @@ export async function POST(req: Request) {
   }
 
   const { content, mood } = await req.json();
+  const { suggestion, quote, song } = await getJournalInsights(content, mood);
 
   if (!content) {
     return NextResponse.json({ error: "Content required" }, { status: 400 });
@@ -61,7 +63,13 @@ export async function POST(req: Request) {
     });
   }
 
-  return NextResponse.json({ journal });
+  return NextResponse.json({
+    message: "Journal saved successfully",
+    journal,
+    suggestion,
+    quote,
+    song,
+  });
 }
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
@@ -95,6 +103,15 @@ export async function GET(req: Request) {
       },
     },
   });
+  if (journal) {
+    const aiResponse = await getJournalInsights(
+      journal.content,
+      journal.mood || "neutral"
+    );
+    return NextResponse.json({
+      journal: { ...journal, aiResponse: JSON.stringify(aiResponse) },
+    });
+  }
 
   return NextResponse.json({ journal });
 }
