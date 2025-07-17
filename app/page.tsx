@@ -14,7 +14,6 @@ import Profile from "./components/profile";
 import Streak from "./components/streak";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { getEmoji } from "./components/getEmoji";
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -23,13 +22,13 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("home");
   const [direction, setDirection] = useState(1);
   const [content, setContent] = useState("");
-  const [mood, setMood] = useState("");
+  const [mood, setMood] = useState("❓");
   async function fetchTodayJournal() {
     const res = await fetch("/api/journal");
     const data = await res.json();
     if (res.ok && data.journal) {
       setContent(data.journal.content);
-      setMood(data.journal.mood || "");
+      setMood(data.journal.mood || "❓");
     }
   }
   useEffect(() => {
@@ -125,7 +124,7 @@ export default function Home() {
                       <Journal content={content} />
                     </div>
                     <div className="col-span-2 row-span-3 col-start-3">
-                      <Mood mood={getEmoji(mood)} />
+                      <Mood mood={mood} />
                     </div>
                     <div className="row-span-3 col-start-5">
                       <Song />
@@ -140,7 +139,7 @@ export default function Home() {
                       <Journal content={content} />
                     </div>
                     <div>
-                      <Mood mood={getEmoji(mood)} />
+                      <Mood mood={mood} />
                     </div>
                     <div>
                       <Song />

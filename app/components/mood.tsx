@@ -1,4 +1,5 @@
 import React from "react";
+import { getEmoji } from "./getEmoji";
 type MoodProps = {
   mood: string;
 };
@@ -10,8 +11,10 @@ export default function Mood({ mood }: MoodProps) {
           Todays Vibe
         </h1>
         <div className="flex flex-col items-center justify-start m-5 h-full">
-          <p className="text-9xl hover:scale-110 duration-300 ">{mood}</p>
-          <p className="text-lg text-gray-600 m-8">Feeling good!</p>
+          <p className="text-9xl hover:scale-110 duration-300 ">
+            {getEmoji(mood)}
+          </p>
+          <p className="text-lg text-gray-600 m-8">Feeling {mood}!</p>
         </div>
       </div>
       <h3 className="text-xl  font-semibold text-gray-700">

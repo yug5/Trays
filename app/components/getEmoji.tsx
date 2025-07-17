@@ -9,5 +9,5 @@ export function getEmoji(emotion: string): string {
     surprise: "🫢",
   };
 
-  return map[emotion.toLowerCase()] || "";
+  return map[emotion.toLowerCase()] || "❓";
 }

@@ -52,7 +52,11 @@ export default function Write({
     const journalRes = await fetch("/api/journal", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content, mood: detectedMood }),
+      body: JSON.stringify({
+        content,
+        mood: detectedMood,
+        date: new Date().toISOString(),
+      }),
     });
 
     setIsSaving(false);

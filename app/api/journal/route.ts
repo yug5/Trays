@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@/app/generated/prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/authOptions";
+import { getJournalInsights } from "@/app/lib/getJournalInsights.ts";
 
 const prisma = new PrismaClient();
 
@@ -27,15 +28,10 @@ export async function POST(req: Request) {
 
   const { searchParams } = new URL(req.url);
   const dateParam = searchParams.get("date");
-  if (!dateParam) {
-    return NextResponse.json(
-      { error: "Date query is required" },
-      { status: 400 }
-    );
-  }
 
-  const requestedDate = new Date(dateParam);
-  requestedDate.setHours(0, 0, 0, 0);
+  const requestedDate = dateParam ? new Date(dateParam) : new Date();
+  requestedDate.setHours(0, 0, 0, 0); // normalize
+
   const nextDay = new Date(requestedDate);
   nextDay.setDate(requestedDate.getDate() + 1);
 
