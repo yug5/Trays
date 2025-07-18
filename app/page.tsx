@@ -11,7 +11,6 @@ import Quote from "./components/quote";
 import Calendar from "./components/calendar";
 import TopMood from "./components/topMood";
 import Profile from "./components/profile";
-import Streak from "./components/streak";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 export default function Home() {
@@ -126,8 +125,7 @@ export default function Home() {
 
       {loaded && (
         <div>
-          <div className="flex flex-row justify-between">
-            <Streak />
+          <div className="flex flex-row justify-end px-5">
             <Profile />
           </div>
           <div className="flex items-center mx-auto rounded-full bg-gray-200  justify-center w-fit mt-10 md:mt-36 ">
@@ -157,7 +155,7 @@ export default function Home() {
                 transition={{ duration: 0.4 }}
               >
                 <>
-                  <div className="hidden md:grid grid-cols-5 grid-rows-5 gap-4 px-32 py-8 min-h-[80vh] w-full z-50">
+                  <div className="hidden lg:grid grid-cols-5 grid-rows-5 gap-4 px-32 py-8 min-h-[80vh] w-full z-50">
                     <div className="col-span-2 row-span-5">
                       <Journal content={content} />
                     </div>
@@ -172,7 +170,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="md:hidden flex flex-col gap-6 px-6 py-8 w-full z-50">
+                  <div className="lg:hidden flex flex-col gap-6 px-6 py-8 w-full z-50">
                     <div>
                       <Journal content={content} />
                     </div>
@@ -199,7 +197,7 @@ export default function Home() {
                 exit="initial md:exit"
                 transition={{ duration: 0.4 }}
               >
-                <div className="hidden md:grid grid-cols-5 grid-rows-5 gap-4 px-32 py-8 min-h-[80vh] w-full z-50">
+                <div className="hidden lg:grid grid-cols-5 grid-rows-5 gap-4 px-32 py-8 min-h-[80vh] w-full z-50">
                   <div className="col-span-3 row-span-5">
                     <Calendar />
                   </div>
@@ -210,7 +208,7 @@ export default function Home() {
                     3
                   </div> */}
                 </div>
-                <div className="md:hidden flex flex-col gap-6 px-6 py-8 w-full z-50">
+                <div className="lg:hidden flex flex-col gap-6 px-6 py-8 w-full z-50">
                   <div>
                     <Calendar />
                   </div>

@@ -1,4 +1,11 @@
 import { NextResponse } from "next/server";
+function getMoodInput(text: string) {
+  const t = text.trim().replace(/\s+/g, " ");
+  const words = t.split(" ");
+  const firstPart = words.slice(0, 50);
+  const lastPart = words.slice(-20);
+  return [...firstPart, ...lastPart].join(" ");
+}
 
 export async function POST(req: Request) {
   const { content } = await req.json();
@@ -8,6 +15,7 @@ export async function POST(req: Request) {
   }
 
   try {
+    const con = getMoodInput(content);
     const hfRes = await fetch(
       "https://api-inference.huggingface.co/models/j-hartmann/emotion-english-distilroberta-base",
       {
@@ -16,7 +24,7 @@ export async function POST(req: Request) {
           Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ inputs: content }),
+        body: JSON.stringify({ inputs: con }),
       }
     );
 

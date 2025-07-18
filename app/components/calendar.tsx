@@ -206,7 +206,7 @@ export default function Calendar({ mood }: CalendarProps) {
               <>
                 {journal ? (
                   <div>
-                    <div className="mb-2 text-gray-700 whitespace-pre-line">
+                    <div className="mb-2 max-h-48 md:max-h-64 overflow-y-auto text-gray-700 whitespace-pre-line">
                       {journal.content}
                     </div>
                     <div className="text-sm text-gray-500 mb-2">
@@ -237,31 +237,39 @@ export default function Calendar({ mood }: CalendarProps) {
               </>
             )}
             {editMode && (
-              <div>
-                <textarea
-                  className="w-full h-24 p-2 border rounded mb-2 text-gray-700 bg-gray-100"
-                  value={editContent}
-                  onChange={(e) => setEditContent(e.target.value)}
-                  placeholder="Write your thoughts..."
-                />
-                <div className="text-sm text-gray-500 mb-2">
-                  Mood: <span className="font-semibold">{editMood}</span>{" "}
-                  <span className="ml-2">{getEmoji(editMood)}</span>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={handleSaveEdit}
-                    className="bg-green-500 text-white px-4 py-1 rounded-lg hover:bg-green-600 transition"
-                    disabled={!editContent.trim() || !editMood || loading}
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={() => setEditMode(false)}
-                    className="bg-gray-300 text-gray-700 px-4 py-1 rounded-lg hover:bg-gray-400 transition"
-                  >
-                    Cancel
-                  </button>
+              <div
+                id="add"
+                className=" fixed inset-0 z-50 flex items-center justify-center "
+              >
+                <div className="md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 rounded-[5%] bg-white shadow-2xl w-screen h-screen flex flex-col items-center p-10 md:w-[30%] md:h-[70%] z-50">
+                  <h1 className="text-3xl text-gray-700 font-bold">
+                    Journal Entry
+                  </h1>
+                  <textarea
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
+                    className="w-full h-full whitespace-pre-wrap m-5 p-5 text-gray-700 bg-gray-100 rounded-lg outline-dashed outline-gray-300 resize-none focus:outline-gray-400"
+                    placeholder="Write your thoughts here..."
+                  ></textarea>
+                  <div className="text-sm text-gray-500 mb-2">
+                    Mood: <span className="font-semibold">{editMood}</span>{" "}
+                    <span className="ml-2">{getEmoji(editMood)}</span>
+                  </div>
+                  <div className="flex justify-end gap-4 w-full mt-5">
+                    <button
+                      onClick={handleSaveEdit}
+                      className="bg-green-500 text-white px-4 py-1 rounded-lg hover:bg-green-600 transition duration-200"
+                      disabled={!editContent.trim() || !editMood || loading}
+                    >
+                      ✔
+                    </button>
+                    <button
+                      onClick={() => setEditMode(false)}
+                      className="bg-red-500 text-white px-4 py-1 rounded-lg hover:bg-red-600 transition duration-200"
+                    >
+                      ✗
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
