@@ -23,12 +23,18 @@ export default function Home() {
   const [direction, setDirection] = useState(1);
   const [content, setContent] = useState("");
   const [mood, setMood] = useState("❓");
-  const [quote, setQuote] = useState<string[]>([]);
+  const [quote, setQuote] = useState<string[]>([
+    "The darkest nights produce the brightest stars. - John Green",
+  ]);
   const [spotifyTrack, setSpotifyTrack] = useState<string[]>([
     "Luka Chippi",
     "Seedhe Maut",
   ]);
-  const [dailyTips, setDailyTips] = useState<string[]>([]); // array
+  const [dailyTips, setDailyTips] = useState<string[]>([
+    "Stay positive",
+    "Take a deep breath",
+    "Smile more",
+  ]); // array
 
   async function fetchTodayJournal() {
     const res = await fetch("/api/journal");

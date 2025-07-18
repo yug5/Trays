@@ -12,10 +12,12 @@ export default function Mood({ mood, tips }: MoodProps) {
           Todays Vibe
         </h1>
         <div className="flex flex-col items-center justify-start m-5 h-full">
-          <p className="text-9xl hover:scale-110 duration-300 ">
-            {getEmoji(mood)}
+          <p className="text-9xl hover:scale-110 text-slate-400 duration-300 ">
+            {getEmoji(mood) === "❓" ? "❔" : getEmoji(mood)}
           </p>
-          <p className="text-lg text-gray-600 m-8">Feeling {mood}!</p>
+          <p className="text-lg text-gray-600 m-8">
+            Feeling {mood === "❓" ? "unsure" : mood}!
+          </p>
         </div>
       </div>
       <h3 className="text-xl  font-semibold text-gray-700">

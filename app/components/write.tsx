@@ -81,7 +81,7 @@ export default function Write({
   return (
     <div
       id="add"
-      className="hidden fixed inset-0 z-40 flex items-center justify-center bg-white bg-opacity-90"
+      className="hidden fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-90"
     >
       <div className="md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 rounded-[5%] bg-white shadow-2xl w-screen h-screen flex flex-col items-center p-10 md:w-[30%] md:h-[70%] z-50">
         <h1 className="text-3xl text-gray-700 font-bold">Journal Entry</h1>

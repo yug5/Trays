@@ -54,7 +54,7 @@ export default function Song({ name, artist }: MoodProps) {
           Spotify Suggestion
         </h1>
       </div>
-      <div className="text-gray-500 text-2xl m-4 mx-auto w-[90%] h-[60%] outline-double outline-4 outline-gray-400 rounded-lg">
+      <div className="text-gray-500 hover:scale-105 shadow-lg hover:shadow-slate-500 duration-300 text-2xl m-4 mx-auto w-[90%] h-[60%] outline-double outline-4 outline-gray-400 rounded-lg">
         {spotifyPoster && (
           <a
             href={spotifyUrl}
@@ -65,7 +65,7 @@ export default function Song({ name, artist }: MoodProps) {
             <img
               src={spotifyPoster}
               alt="Spotify Track Poster"
-              className="rounded-lg w-full h-full object-cover mb-4"
+              className="rounded-lg w-full  h-full my-auto mx-auto p-1 object-cover "
             />
           </a>
         )}
