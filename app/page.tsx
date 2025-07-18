@@ -14,7 +14,6 @@ import Profile from "./components/profile";
 import Streak from "./components/streak";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { body } from "framer-motion/client";
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -24,8 +23,11 @@ export default function Home() {
   const [direction, setDirection] = useState(1);
   const [content, setContent] = useState("");
   const [mood, setMood] = useState("❓");
-  const [quote, setQuote] = useState("");
-  const [spotifyTrack, setSpotifyTrack] = useState("");
+  const [quote, setQuote] = useState<string[]>([]);
+  const [spotifyTrack, setSpotifyTrack] = useState<string[]>([
+    "Luka Chippi",
+    "Seedhe Maut",
+  ]);
   const [dailyTips, setDailyTips] = useState<string[]>([]); // array
 
   async function fetchTodayJournal() {
@@ -157,7 +159,7 @@ export default function Home() {
                       <Mood mood={mood} tips={dailyTips} />
                     </div>
                     <div className="row-span-3 col-start-5">
-                      <Song name={spotifyTrack} />
+                      <Song name={spotifyTrack[0]} artist={spotifyTrack[1]} />
                     </div>
                     <div className="col-span-3 row-span-2 col-start-3 row-start-4">
                       <Quote quote={quote} />
@@ -172,7 +174,7 @@ export default function Home() {
                       <Mood mood={mood} tips={dailyTips} />
                     </div>
                     <div>
-                      <Song name={spotifyTrack} />
+                      <Song name={spotifyTrack[0]} artist={spotifyTrack[1]} />
                     </div>
                     <div>
                       <Quote quote={quote} />

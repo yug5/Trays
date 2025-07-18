@@ -1,6 +1,6 @@
 import React from "react";
 type QuoteProps = {
-  quote: string;
+  quote: string[];
 };
 
 export default function Quote({ quote }: QuoteProps) {
@@ -13,10 +13,10 @@ export default function Quote({ quote }: QuoteProps) {
         <div className="text-gray-500 text-2xl mb-4 w-[90%] h-[90%] overflow-y-auto  rounded-lg">
           <div className="flex flex-col items-center justify-center h-full">
             <h1 className="text-xl font-bold text-gray-700 mb- 4 p-5">
-              {quote}
+              {quote[0]}
             </h1>
             <p className="text-lg text-gray-600 text-end justify-end mb-8 p-5">
-              - Franklin D. Roosevelt
+              - {quote[1]}
             </p>
           </div>
         </div>

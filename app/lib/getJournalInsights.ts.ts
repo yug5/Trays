@@ -8,8 +8,8 @@ Give me a valid JSON response only. Do not include any explanation.
 Format:
 {
   "suggestion": ["...", "...", "..."], 
-  "quote": "...", 
-  "song": "Song Name - Artist"
+  "quote": ["Quote Text", "Author"], 
+  "song": ["Song Name" , "Artist"]
 }
 `;
 
@@ -49,8 +49,8 @@ Format:
     console.error("Error parsing Mistral response:", error);
     return {
       suggestion: ["Stay positive", "Take a deep breath", "Smile more"],
-      quote: "This too shall pass.",
-      song: "Happy - Pharrell Williams",
+      quote: ["This too shall pass.", "Unknown"],
+      song: ["Luka Chippi", " Seedhe Maut"],
     };
   }
 }
