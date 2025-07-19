@@ -46,6 +46,8 @@ export default function Calendar({ mood }: CalendarProps) {
   const endOfMonth = currentDate.endOf("month");
   const daysInMonth = endOfMonth.date();
   const startDay = startOfMonth.day();
+  const [con, setCon] = useState(false);
+  const [m, setM] = useState(false);
 
   const prevMonth = () => setCurrentDate(currentDate.subtract(1, "month"));
   const nextMonth = () => setCurrentDate(currentDate.add(1, "month"));
@@ -245,6 +247,14 @@ export default function Calendar({ mood }: CalendarProps) {
                   <h1 className="text-3xl text-gray-700 font-bold">
                     Journal Entry
                   </h1>
+                  {con && (
+                    <div className="text-red-400">
+                      *Please write something before saving.*
+                    </div>
+                  )}
+                  {m && (
+                    <div className="text-red-400">*Failed to detect mood.*</div>
+                  )}
                   <textarea
                     value={editContent}
                     onChange={(e) => setEditContent(e.target.value)}

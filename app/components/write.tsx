@@ -16,7 +16,8 @@ export default function Write({
   refetchJournal,
 }: WriteProps) {
   const [isSaving, setIsSaving] = useState(false);
-
+  const [con, setCon] = useState(false);
+  const [m, setM] = useState(false);
   const Close = () => {
     const modal = document.getElementById("add");
     if (modal) modal.classList.add("hidden");
@@ -24,7 +25,7 @@ export default function Write({
 
   const handleSave = async () => {
     if (!content) {
-      alert("Please write something before saving.");
+      setCon(true);
       return;
     }
 
@@ -41,7 +42,7 @@ export default function Write({
     const detectedMood = moodData.mood;
 
     if (!detectedMood) {
-      alert("Failed to detect mood.");
+      setM(true);
       setIsSaving(false);
       return;
     }
@@ -70,7 +71,6 @@ export default function Write({
     const journalData = await journalRes.json();
 
     if (journalData.journal) {
-      alert("Journal entry saved successfully!");
       refetchJournal();
       Close();
     } else {
@@ -86,6 +86,12 @@ export default function Write({
       <div className="md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 rounded-[5%] bg-white shadow-2xl w-screen h-screen flex flex-col items-center p-10 md:w-[30%] md:h-[70%] z-50">
         <h1 className="text-3xl text-gray-700 font-bold">Journal Entry</h1>
         <div className="text-gray-500 text-sm">~ add to your day</div>
+        {con && (
+          <div className="text-red-400">
+            *Please write something before saving.*
+          </div>
+        )}
+        {m && <div className="text-red-400">*Failed to detect mood.*</div>}
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
