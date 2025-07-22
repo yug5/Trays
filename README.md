@@ -43,15 +43,15 @@ Trays is an AI-powered mood journal that transforms your daily thoughts into vis
 
 npm install
 
-Set up environment variables
-Create a .env file and add:
-
-DATABASE_URL=your_postgresql_url
-NEXTAUTH_SECRET=your_auth_secret
-NEXTAUTH_URL=http://localhost:3000
-SPOTIFY_CLIENT_ID=your_client_id
-SPOTIFY_CLIENT_SECRET=your_secret
-CLOUDINARY_URL=cloudinary_upload_url
+      Set up environment variables
+      Create a .env file and add:
+      
+      DATABASE_URL=your_postgresql_url
+      NEXTAUTH_SECRET=your_auth_secret
+      NEXTAUTH_URL=http://localhost:3000
+      SPOTIFY_CLIENT_ID=your_client_id
+      SPOTIFY_CLIENT_SECRET=your_secret
+      CLOUDINARY_URL=cloudinary_upload_url
 
 Run the app
 
