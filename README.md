@@ -59,9 +59,9 @@ Run the app
 
 📸 Screenshots
 
-    <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e0a4a3fd-cdc3-4baf-a47d-9c3ab2eb0136" />
+   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e0a4a3fd-cdc3-4baf-a47d-9c3ab2eb0136" />
+   <img width="1920" height="1078" alt="image" src="https://github.com/user-attachments/assets/a5476c05-8cc3-46cb-b000-9389988e39e0" />
 
-    ![Uploading image.png…]()
 
     Home page with "Today's Vibe"
 
